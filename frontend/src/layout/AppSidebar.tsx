@@ -1,7 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBrain, faCalculator, faCloudRain, faComment, faFlask, faMapLocation, faMapPin, faSeedling, faSunPlantWilt, faTableList } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBrain,
+  faCalculator,
+  faCloudRain,
+  faComment,
+  faFlask,
+  faIdCard,
+  faMapLocation,
+  faMapPin,
+  faSeedling,
+  faSunPlantWilt,
+  faTableList,
+} from "@fortawesome/free-solid-svg-icons";
 
 // Assume these icons are imported from an icon library
 import {
@@ -27,11 +39,15 @@ const navItems: NavItem[] = [
     path: "/home",
   },
   {
+    icon: <FontAwesomeIcon icon={faIdCard} />,
+    name: "Codigo Minciencias",
+    path: "/codigo",
+  },
+  {
     icon: <FontAwesomeIcon icon={faFlask} />,
     name: "Productos Minciencias",
-    path: "/map",
-  }
-
+    path: "/productos",
+  },
 ];
 
 const othersItems: NavItem[] = [
@@ -70,7 +86,6 @@ const AppSidebar: React.FC = () => {
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // const isActive = (path: string) => location.pathname === path;
   const isActive = useCallback(
     (path: string) => location.pathname === path,
     [location.pathname]
@@ -263,39 +278,37 @@ const AppSidebar: React.FC = () => {
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Logo */}
       <div
-        className={`py-8 flex ${
+        className={`py-6 flex ${
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link to="/">
+        <Link to="/" className="w-full">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <img
-                className="dark:hidden"
+                className="dark:hidden w-full h-auto"
                 src="/images/logo/logo.png"
                 alt="Logo"
-                width={150}
-                height={40}
               />
               <img
-                className="hidden dark:block"
+                className="hidden dark:block w-full h-auto"
                 src="/images/logo/logoB.png"
                 alt="Logo"
-                width={150}
-                height={40}
               />
             </>
           ) : (
             <img
               src="/images/logo/logo.png"
               alt="Logo"
-              width={32}
-              height={32}
+              className="w-10 h-auto mx-auto"
             />
           )}
         </Link>
       </div>
+
+      {/* Menú */}
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
           <div className="flex flex-col gap-4">

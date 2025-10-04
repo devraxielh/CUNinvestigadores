@@ -19,21 +19,11 @@ export default function AuthLayout({
             <div className="flex flex-col items-center max-w-xs">
               <Link to="/" className="block mb-4">
                 <img
-                  width={531}
+                  width={300}
                   src="/images/logo/logoB.png"
                   alt="Logo"
                 />
               </Link>
-              <Link to="/" className="block mb-4">
-                <img
-                  width={150}
-                  src="/images/logo/logoRosaB.png"
-                  alt="Logo"
-                />
-              </Link>
-              <p className="text-center text-gray-400 dark:text-white/60">
-                Ganaderia Inteligente y Sostenible.
-              </p>
             </div>
           </div>
         </div>
