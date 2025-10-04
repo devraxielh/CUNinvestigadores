@@ -4,6 +4,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file: .env
+    environment:
+      DEBUG: "1"
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      WATCHFILES_FORCE_POLLING: "1"
     volumes:
       - ./backend:/app
     command: >
@@ -14,12 +19,24 @@ services:
     ports:
       - "8000:8000"
 
+    develop:
+      watch:
+        - path: ./backend
+          target: /app
+          action: sync
+        - path: ./backend/requirements.txt
+          action: rebuild
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      VITE_API_BASE: ${VITE_API_BASE:-http://localhost:8000}
+      VITE_API_URL: http://localhost:8000/api/
+      VITE_OLLAMA_BASE: http://localhost:11434
+      VITE_OLLAMA_MODEL : CUN-minciencias-investigador
+      CHOKIDAR_USEPOLLING: "true"
+      VITE_DEV_HOST: "0.0.0.0"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -28,3 +45,13 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+
+    develop:
+      watch:
+        - path: ./frontend
+          target: /app
+          action: sync
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
